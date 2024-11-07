@@ -3,13 +3,16 @@ import {
   GamePadIcon,
   FaceHappyIcon,
   RouteIcon,
-} from "@/app/components/icons";
+} from "@/components/icons";
 import { cn } from "@/helpers/cn";
+import Link from "next/link";
 import React from "react";
 
 type NavBarProps = React.ComponentProps<"nav">;
 type NavBarListProps = React.ComponentProps<"ul">;
 type NavBarListItemProps = React.ComponentProps<"li">;
+type NavBarListItemLinkProps =  React.ComponentProps<typeof Link>;
+type NavBarListItemButtonProps =  React.ComponentProps<"button">
 
 const NavBarList = ({ children, className, ...props }:  NavBarListProps) => {
   return (
@@ -26,6 +29,18 @@ const NavBarListItem = ({ children, className, ...props }: NavBarListItemProps) 
   );
 };
 
+const NavBarListItemLink = ({ href, children, className, ...props }: NavBarListItemLinkProps) => {
+  return <NavBarListItem className={cn("p-0", className)}>
+              <Link href={href} className="flex gap-2 items-center w-full p-2 rounded-lg" {...props}>{children}</Link>
+         </NavBarListItem>
+}
+
+const NavBarListItemButton = ({children, className, ...props }: NavBarListItemButtonProps) => {
+  return <NavBarListItem className={cn("p-0", className)}>
+              <button className="flex gap-2 items-center w-full p-2 rounded-lg" {...props}>{children}</button>
+         </NavBarListItem>
+}
+
 export const NavBar = ({ className, ...props}: NavBarProps) => {
   return (
     <nav className={cn("flex flex-col bg-slate-900 border-r border-indigo-400/20 h-screen hover:border-indigo-400/20 w-72 p-2 text-slate-300",  `${className}`)} {...props}>
@@ -33,21 +48,25 @@ export const NavBar = ({ className, ...props}: NavBarProps) => {
         <img src="/assets/logo.png" alt="logo breno" className="w-auto h-36" />
       </div>
         <NavBarList className="flex-grow">
-            <NavBarListItem>
+            <NavBarListItemLink href={"/"}>
                 <HomeIcon className="w-4 h-4" />Home
-            </NavBarListItem>
-            <NavBarListItem>
+            </NavBarListItemLink>
+            <NavBarListItemLink  href={"/games"}>
                 <GamePadIcon className="w-4 h-4" /> Games
-            </NavBarListItem>
-            <NavBarListItem>
+            </NavBarListItemLink>
+            <NavBarListItemLink  href={"/top-10"}>
                 <FaceHappyIcon className="w-4 h-4" /> Top 10
-            </NavBarListItem>
-            <NavBarListItem>
-                <RouteIcon className="w-4 h-4" /> Games
-            </NavBarListItem>
+            </NavBarListItemLink>
+            <NavBarListItemLink  href={"/walkthoughs"}>
+                <RouteIcon className="w-4 h-4" /> Walkthoughs
+            </NavBarListItemLink>
+
+           {/* <NavBarListItemButton onClick={() => {alert("Funcionando")}}>
+              <RouteIcon className="w-4 h-4" /> Walkthoughs
+            </NavBarListItemButton>*/}
         </NavBarList>
         <NavBarList>
-            <NavBarListItem><FaceHappyIcon className="w-4 h-4" />User</NavBarListItem>
+            <NavBarListItemLink  href={"/user"}><FaceHappyIcon className="w-4 h-4" />User</NavBarListItemLink>
         </NavBarList>
     </nav>
   );
