@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { NavBar } from "../components/icons";
+import { Inter } from "next/font/google"
+import { cn } from "@/helpers/cn";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ["latin"]})
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,10 +17,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  //https://emersonbroga.com/e/assets/emersonbroga-logo-name-pink.png
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex gap-2`}>
+      <body className={cn("flex gap-2 bg-slate-890 text-slate-300",inter.className)}>
        <NavBar/>
         {children}
       </body>

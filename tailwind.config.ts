@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors:{
+        'slate-890' : "rgb(var(--color-slate-890) / <alpha-value>)"
+      }
     },
   },
   plugins: [],
