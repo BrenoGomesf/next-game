@@ -21,7 +21,9 @@ const Games = {
       
         const records = await prisma.games.count({  where });
         return records;
-    }
+    },
+
+    
 }
 
 export default Games;
