@@ -2,6 +2,7 @@ import { PageWrapper, Pagination } from "@/components";
 import { getGameImage } from "@/helpers/games";
 import GamesService from "@/services/Games";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Games({
   searchParams,
@@ -21,7 +22,7 @@ export default async function Games({
                     return <div
                     key={game.title}
                     className="flex-center flex-col relative overflow-hidden">
-                    <div className="h-full w-full">
+                    <Link className="h-full w-full"  href={`/games/${game.slug}`} >
                     <Image
                         src={`${getGameImage(game.image)}`}
                         alt={game.title}
@@ -29,7 +30,7 @@ export default async function Games({
                         height={400}
                         className="w-full h-full object-cover transition duration-500 hover:scale-105 "
                     />
-                    </div>
+                    </Link>
                     <p className=" pt-2 pb-2 px-2 w-full">
                     {game.title}
                     </p>
