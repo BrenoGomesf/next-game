@@ -56,5 +56,9 @@ const ArticleService = {
             }
         }
     },
+
+    getArticlesBySlug: async(slug: string) => {
+       return await Article.getOne({ where: {slug}})
+    }
 }
 export default ArticleService
