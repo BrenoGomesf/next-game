@@ -75,7 +75,6 @@ export const handleSignUpForm = async (prevState: SignUpStates, formData: FormDa
     try {
         const record = await UsersService.signUp(data);
         redirect('/');
-        return {  isValid: true, errors: { name: null, email: null, password: null, passwordConfirmation: null } };
     } catch (error) {
         return {
             ...prevState,

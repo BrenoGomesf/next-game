@@ -1,6 +1,12 @@
 'use server';
 
+import { encrypt } from "@/helpers/jwt";
+import { createSession } from "@/helpers/session";
 import { getZodErros } from "@/helpers/zod";
+import UsersService from "@/services/Users";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 import { z, ZodError } from "zod";
 
@@ -16,8 +22,8 @@ export type SignInStates = {
 
 const validateSignUpForm = (formData: FormData): SignInStates => {
     const userSchema = z.object({
-        name: z.string().min(3, { message: "Name must be at least 3 characters long" }),
         email: z.string().email({ message: "Invalid email address" }),
+        password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
     });
 
     try {
@@ -35,6 +41,9 @@ const validateSignUpForm = (formData: FormData): SignInStates => {
 
 export const handleSignInForm = async (prevState: SignInStates, formData: FormData): Promise<SignInStates> => {
     const validation = validateSignUpForm(formData);
+    console.log("form",formData)
+    console.log("prev",prevState)
+    console.log("isValid",validation)
     if (!validation.isValid) {
         return { ...prevState, ...validation };
     }
@@ -44,7 +53,18 @@ export const handleSignInForm = async (prevState: SignInStates, formData: FormDa
         password: formData.get("password")?.toString() || "",
     };
 
-    console.log("ALL GOOD", data)
-    return { isValid: true, errors: {} };
+    const user = await UsersService.sigin(data);
+
+    if(!user) return { isValid: false, errors: {} };
+
+    const payload = {
+        uuid: user.uuid,
+        name: user.name,
+        email: user.email
+    }
+    const jwt = await  encrypt(payload)
+    await createSession(jwt);
+    revalidatePath('/');
+    return redirect('/')
   
 };

@@ -7,6 +7,9 @@ const Users = {
         return  prisma.user.create({
             data
         })
+    },
+    findByEmail: (email: string) => {
+        return prisma.user.findUnique({where: {email}})
     }
 }
 
