@@ -1,6 +1,7 @@
 'use server';
 
 import UsersService from "@/services/Users";
+import { redirect } from "next/navigation";
 import { z, ZodError } from "zod";
 
 export type SignUpError = {
@@ -73,7 +74,7 @@ export const handleSignUpForm = async (prevState: SignUpStates, formData: FormDa
 
     try {
         const record = await UsersService.signUp(data);
-        console.log("record =", record);
+        redirect('/');
         return {  isValid: true, errors: { name: null, email: null, password: null, passwordConfirmation: null } };
     } catch (error) {
         return {

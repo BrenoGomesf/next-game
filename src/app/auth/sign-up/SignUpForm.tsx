@@ -17,7 +17,7 @@ const initialStates: SignUpStates = {
 export default function SignUpForm() {
   const [states, formAction] = useFormState(handleSignUpForm, initialStates);
 
-  console.log("states***=", states);
+
 
   return (
     <form action={formAction} noValidate>
