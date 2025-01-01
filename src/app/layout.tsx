@@ -19,6 +19,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await getSession();
+
+  console.log(user)
+  if(user && user.iat && user.exp){
+    console.log("iat=", new Date(user.iat * 1000).toDateString());
+    console.log("exp=", new Date(user.exp * 1000).toDateString());
+  }
   return (
     <html lang="en">
       <body className={cn("bg-slate-890 text-slate-300",inter.className)}>
