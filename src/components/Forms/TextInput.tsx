@@ -2,8 +2,8 @@ import { cn } from "@/helpers/cn";
 import React from "react";
 
 export type TextInputProps = React.ComponentProps<'input'> & {
-    label?: string | null | undefined;
-    error?: string | null | undefined;
+    label?: string | null 
+    error?: string | null 
 }
 export default function TextInput({label, type = "text", name, className, error, ...props}: TextInputProps) {
   return (
