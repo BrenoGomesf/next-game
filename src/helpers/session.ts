@@ -3,7 +3,7 @@ import { decrypt, encrypt } from "./jwt";
 
 const SESSION_NAME = 'session'
 const generateExpires = () => {
-   const expires = new Date(Date.now() + 60 * 1000)
+   const expires = new Date(Date.now() + 60 * 60 *  1000)
    return expires
 }
 export const createSession = async (payload: string) => {
@@ -32,3 +32,7 @@ export const getSession = async () => {
      httpOnly: true,
    };
  };
+ export const logout = async () => {
+   //destroy session
+   await (await cookies()).set(SESSION_NAME, "", {expires: new Date(0)});
+ }
